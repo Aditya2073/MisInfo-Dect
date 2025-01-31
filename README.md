@@ -4,12 +4,10 @@ A Chrome extension that helps users detect potential misinformation in web conte
 
 ## Features
 
-- **Real-time Analysis**: Scans web pages as you browse
 - **Credibility Scoring**: Provides a credibility score based on multiple factors
 - **Visual Indicators**: Uses badge colors and icons to show analysis status
 - **Detailed Reports**: Access comprehensive analysis through the extension popup
 - **History Tracking**: Maintains a history of scanned pages and their results
-- **Auto-Scan Toggle**: Option to enable/disable automatic page scanning
 
 ## How It Works
 
