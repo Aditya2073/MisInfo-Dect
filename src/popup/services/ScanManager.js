@@ -1,7 +1,7 @@
 import { FactCheckRenderer } from './FactCheckRenderer';
 
 /**
- * Manages page scanning and result displ
+ * Manages page scanning and result display
  */
 export class ScanManager {
   constructor() {
