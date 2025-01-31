@@ -38,6 +38,10 @@ A Chrome extension that helps users detect potential misinformation in web conte
 ## Setup
 
 1. Clone the repository
+```bash
+git clone https://github.com/Aditya2073/MisInfo-Dect.git
+```
+
 2. Install dependencies:
 ```bash
 npm install
