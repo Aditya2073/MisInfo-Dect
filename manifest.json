@@ -1,0 +1,53 @@
+{
+  "manifest_version": 3,
+  "name": "MisInfo Detective",
+  "version": "1.0.0",
+  "description": "Real-time webpage content analysis for credibility assessment using Google Fact Check and Gemini APIs",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://factchecktools.googleapis.com/*",
+    "https://generativelanguage.googleapis.com/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/assets/icon16.png",
+      "48": "/assets/icon48.png",
+      "128": "/assets/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.bundle.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "history-details.html",
+      "history-details.bundle.js"
+    ],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }],
+  "icons": {
+    "16": "/assets/icon16.png",
+    "48": "/assets/icon48.png",
+    "128": "/assets/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

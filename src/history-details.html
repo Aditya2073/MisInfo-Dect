@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>History Details - MisInfo Detective</title>
+  <style>
+    :root {
+      --primary-color: #4a90e2;
+      --secondary-color: #f5f5f5;
+      --text-color: #333;
+      --success-color: #4caf50;
+      --warning-color: #ff9800;
+      --danger-color: #f44336;
+      --border-color: #ddd;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f9f9f9;
+      color: var(--text-color);
+    }
+
+    #details-content {
+      max-width: 800px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .header {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .title {
+      margin: 0 0 10px 0;
+      color: var(--primary-color);
+      font-size: 24px;
+    }
+
+    .url {
+      color: #666;
+      word-break: break-all;
+      margin-bottom: 5px;
+    }
+
+    .date {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .score-container {
+      margin: 20px 0;
+      padding: 15px;
+      background: var(--secondary-color);
+      border-radius: 4px;
+    }
+
+    .meter {
+      height: 20px;
+      position: relative;
+      background: #f3f3f3;
+      border-radius: 25px;
+      padding: 5px;
+      box-shadow: inset 0 -1px 1px rgba(255, 255, 255, 0.3);
+    }
+
+    .meter-fill {
+      display: block;
+      height: 100%;
+      border-radius: 8px;
+      background-color: var(--success-color);
+      position: relative;
+      overflow: hidden;
+      transition: width 0.5s ease-in-out;
+    }
+
+    .meter-text {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-weight: bold;
+      text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .claims-container {
+      margin: 20px 0;
+    }
+
+    .source-group {
+      margin-bottom: 15px;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+    }
+
+    .source-name {
+      padding: 10px;
+      background: var(--secondary-color);
+      font-weight: bold;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .claim-item {
+      padding: 15px;
+      border-bottom: 1px solid var(--border-color);
+    }
+
+    .claim-item:last-child {
+      border-bottom: none;
+    }
+
+    .claim-text {
+      margin-bottom: 10px;
+    }
+
+    .claim-rating {
+      display: inline-block;
+      padding: 4px 8px;
+      background: var(--warning-color);
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+
+    .claim-source {
+      display: inline-block;
+      margin-left: 10px;
+      color: var(--primary-color);
+      text-decoration: none;
+      font-size: 14px;
+    }
+
+    .claim-source:hover {
+      text-decoration: underline;
+    }
+
+    .summary-card {
+      margin: 20px 0;
+      padding: 15px;
+      background: var(--secondary-color);
+      border-radius: 4px;
+      line-height: 1.6;
+    }
+
+    .error-message {
+      padding: 15px;
+      background: #ffebee;
+      border: 1px solid #ffcdd2;
+      border-radius: 4px;
+      color: var(--danger-color);
+    }
+
+    .debug-info {
+      margin-top: 10px;
+      padding: 10px;
+      background: #f5f5f5;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+  </style>
+</head>
+<body>
+  <div id="details-content">
+    <!-- Content will be populated by JavaScript -->
+  </div>
+  <script src="../history-details.bundle.js"></script>
+</body>
+</html>

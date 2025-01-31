@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MisInfo Detective</title>
+</head>
+<body>
+  <!-- Main application container -->
+  <div id="app">
+    <!-- Navigation tabs for different sections -->
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="realtime">Real-time Analysis</button>
+      <button class="tab-btn" data-tab="history">History</button>
+      <button class="tab-btn" data-tab="settings">Settings</button>
+    </div>
+
+    <!-- Real-time Analysis Tab -->
+    <div class="tab-content active" id="realtime">
+      <!-- Manual scan controls -->
+      <div class="scan-controls">
+        <button id="scan-page" class="primary-button">Scan Current Page</button>
+        <div class="scan-status"></div>
+      </div>
+      <!-- Visual credibility score meter -->
+      <div class="credibility-meter">
+        <div class="meter-fill"></div>
+        <span class="meter-label">Credibility Score</span>
+      </div>
+      <div id="results"></div>
+      <!-- Detailed analysis results sections -->
+      <div class="analysis-results">
+        <div class="fact-check-results">
+          <div class="google-fact-check"></div>
+          <div class="claimbuster-results"></div>
+        </div>
+        <div class="source-rating"></div>
+        <div class="summary-card"></div>
+      </div>
+    </div>
+    
+    <!-- History Tab - Shows past analyses -->
+    <div class="tab-content" id="history">
+      <div class="history-list"></div><!-- List of previously analyzed pages -->
+    </div>
+    
+    <!-- Settings Tab -->
+    <div class="tab-content" id="settings">
+      <h2>Settings</h2>
+      <div class="settings-group">
+        <!-- API Status Information -->
+        <div class="settings-info">
+          <h3>API Configuration</h3>
+          <div class="api-status">
+            <!-- Google Fact Check API Status -->
+            <div class="status-item">
+              <span class="status-label">Google Fact Check API:</span>
+              <span id="google-api-status" class="status-indicator"></span>
+            </div>
+            <!-- ClaimBuster API Status -->
+            <div class="status-item">
+              <span class="status-label">ClaimBuster API:</span>
+              <span id="claimbuster-api-status" class="status-indicator"></span>
+            </div>
+            <!-- Gemini API Status -->
+            <div class="status-item">
+              <span class="status-label">Gemini API:</span>
+              <span id="gemini-api-status" class="status-indicator"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Main popup script bundle -->
+  <script src="popup.bundle.js"></script>
+</body>
+</html>
