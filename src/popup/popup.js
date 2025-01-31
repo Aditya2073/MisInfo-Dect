@@ -1,5 +1,4 @@
 import './popup.css';
-import './styles.css';
 import { TabManager } from './services/TabManager';
 import { HistoryManager } from './services/HistoryManager';
 import { SettingsManager } from './services/SettingsManager';
@@ -39,9 +38,9 @@ class PopupManager {
     // Load settings
     await this.settingsManager.loadSettings();
     
-    // Check API status and update indicators
+    // Check API status and update scan button
     const apiStatus = await this.settingsManager.checkApiStatus();
-    this.updateApiStatusIndicators(apiStatus);
+    this.updateScanButtonState(apiStatus);
 
     // Add tab change listener for history
     this.tabManager.tabs.forEach(tab => {
@@ -83,23 +82,13 @@ class PopupManager {
     }
   }
 
-  updateApiStatusIndicators(status) {
-    // Update Google API status
-    const googleStatus = document.getElementById('google-api-status');
-    if (googleStatus) {
-      googleStatus.className = `status-indicator ${status.googleFactCheck ? 'active' : 'inactive'}`;
-    }
-
-    // Update ClaimBuster API status
-    const claimBusterStatus = document.getElementById('claimbuster-api-status');
-    if (claimBusterStatus) {
-      claimBusterStatus.className = `status-indicator ${status.claimBuster ? 'active' : 'inactive'}`;
-    }
-
-    // Update Gemini API status
-    const geminiStatus = document.getElementById('gemini-api-status');
-    if (geminiStatus) {
-      geminiStatus.className = `status-indicator ${status.gemini ? 'active' : 'inactive'}`;
+  updateScanButtonState(apiStatus) {
+    const { googleApiKey, geminiApiKey } = apiStatus;
+    if (this.scanManager.scanButton) {
+      this.scanManager.scanButton.disabled = !(googleApiKey && geminiApiKey);
+      if (!googleApiKey || !geminiApiKey) {
+        this.scanManager.scanStatus.textContent = 'Please configure API keys to enable scanning';
+      }
     }
   }
 
@@ -118,10 +107,7 @@ class PopupManager {
       } else if (message.type === 'analysisError') {
         console.error('Analysis error:', message.data.error);
         this.scanManager.showError(message.data.error);
-      } else if (message.type === 'analysisComplete') {
-        this.scanManager.handleAnalysisComplete(message.data);
       }
-      return true;
     });
   }
 }

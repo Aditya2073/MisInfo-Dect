@@ -1,48 +1,13 @@
-import ClaimBusterService from './ClaimBusterService';
-
 /**
  * Handles content analysis using Fact Check API and Gemini AI
  */
 class AnalysisService {
-  constructor() {
-    this.claimBusterService = new ClaimBusterService();
-  }
-
-  /**
-   * Checks facts using multiple fact checking services
-   * @param {string} text - Text content to check
-   * @returns {Object} Combined fact check results
-   */
-  async checkFacts(text) {
-    try {
-      // Run both fact checks in parallel
-      const [googleResults, claimBusterResults] = await Promise.all([
-        this.checkGoogleFacts(text),
-        this.claimBusterService.analyzeClaims(text)
-      ]);
-
-      return {
-        googleFactCheck: googleResults,
-        claimBuster: claimBusterResults,
-        timestamp: new Date().toISOString()
-      };
-    } catch (error) {
-      console.error('Error in fact checking:', error);
-      return {
-        googleFactCheck: [],
-        claimBuster: [],
-        timestamp: new Date().toISOString(),
-        error: error.message
-      };
-    }
-  }
-
   /**
    * Checks facts using Google's Fact Check API
    * @param {string} text - Text content to check
    * @returns {Array} Array of fact check results
    */
-  async checkGoogleFacts(text) {
+  async checkFacts(text) {
     try {
       // Split text into paragraphs for more accurate fact checking
       const paragraphs = text.split('\n').filter(p => p.trim().length > 50);
@@ -86,11 +51,16 @@ class AnalysisService {
     return results
       .flat()
       .filter((claim, index, self) => 
-        index === self.findIndex(c => c.text === claim.text)
+        index === self.findIndex(c => 
+          c.text === claim.text && 
+          c.claimant === claim.claimant
+        )
       )
       .map(claim => ({
-        ...claim,
-        source: 'Google Fact Check'
+        text: claim.text,
+        claimReview: claim.claimReview || [], // Preserve the full claimReview array
+        claimDate: claim.claimDate || null,
+        claimant: claim.claimant || 'Unknown'
       }));
   }
 
@@ -190,28 +160,17 @@ ${text.slice(0, 3000)}`;
 
   /**
    * Combines results from fact checking and AI analysis
-   * @param {Object} factCheckResults - Results from fact checking services
+   * @param {Array} factCheckResults - Results from Fact Check API
    * @param {Object} geminiAnalysis - Results from Gemini AI
    * @returns {Object} Combined analysis results
    */
   combineResults(factCheckResults, geminiAnalysis) {
-    const googleClaims = (factCheckResults.googleFactCheck || []).map(claim => ({
+    const claims = (factCheckResults || []).map(claim => ({
       text: claim.text || 'No claim text available',
       claimReview: claim.claimReview || [], // Preserve the claimReview array
       claimDate: claim.claimDate || null,
-      claimant: claim.claimant || 'Unknown',
-      source: claim.source
+      claimant: claim.claimant || 'Unknown'
     }));
-
-    const claimBusterClaims = (factCheckResults.claimBuster || []).map(claim => ({
-      text: claim.text || 'No claim text available',
-      claimReview: claim.claimReview || [], // Preserve the claimReview array
-      claimDate: claim.claimDate || null,
-      claimant: claim.claimant || 'Unknown',
-      source: 'ClaimBuster'
-    }));
-
-    const claims = [...googleClaims, ...claimBusterClaims];
 
     const credibilityScore = this.calculateCredibilityScore(claims, geminiAnalysis);
 
